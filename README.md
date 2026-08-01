@@ -2,8 +2,8 @@
 
 A powerful, flexible, and reusable Jetpack Compose grid layout composable for Android. Perfect for creating adaptive grids that work across all device sizes and orientations.
 
-[![Build & Test](https://github.com/saisanjeevkolasani/FlexibleGrid/actions/workflows/build.yml/badge.svg)](https://github.com/saisanjeevkolasani/FlexibleGrid/actions/workflows/build.yml)
-[![Publish Library](https://github.com/saisanjeevkolasani/FlexibleGrid/actions/workflows/publish.yml/badge.svg)](https://github.com/saisanjeevkolasani/FlexibleGrid/actions/workflows/publish.yml)
+[![Build & Test](https://github.com/sanjeevk94/FlexibleGrid/actions/workflows/build.yml/badge.svg)](https://github.com/sanjeevk94/FlexibleGrid/actions/workflows/build.yml)
+[![Publish Library](https://github.com/sanjeevk94/FlexibleGrid/actions/workflows/publish.yml/badge.svg)](https://github.com/sanjeevk94/FlexibleGrid/actions/workflows/publish.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
 ## ✨ Features
@@ -13,6 +13,7 @@ A powerful, flexible, and reusable Jetpack Compose grid layout composable for An
 - 📜 **Dual Scroll Support** - Vertical or horizontal scrolling
 - 🎨 **Generic Rendering** - Render any data type with custom composables
 - ⚙️ **Configurable** - Customize rows, columns, spacing, and more
+- 👆 **Built-in Item Actions** - Single tap, double tap, and long press support
 - 🚀 **High Performance** - Uses LazyColumn/LazyRow for efficient rendering
 - 📦 **Easy to Integrate** - Single composable, zero complexity
 - 🛡️ **Production Ready** - Apache 2.0 licensed, well-documented
@@ -35,7 +36,7 @@ dependencyResolutionManagement {
 Add to your module `build.gradle.kts`:
 ```kotlin
 dependencies {
-    implementation("com.github.saisanjeevkolasani:FlexibleGrid:v1.0.0")
+    implementation("com.github.sanjeevk94:FlexibleGrid:v2.0.0")
 }
 ```
 
@@ -59,6 +60,9 @@ FlexibleGrid(
     columns = 2,
     fillDirection = GridFillDirection.RowWise,
     scrollType = GridScrollType.Vertical,
+    onItemClick = { item, index ->
+        println("Tapped item $item at position $index")
+    },
     itemContent = { item, _ ->
         Card(
             modifier = Modifier
@@ -77,6 +81,9 @@ FlexibleGrid(
     columns = 4,
     fillDirection = GridFillDirection.RowWise,
     scrollType = GridScrollType.Horizontal,
+    onItemLongPress = { item, _ ->
+        showDetails(item)
+    },
     itemContent = { item, _ ->
         ProductCard(item)
     }
@@ -217,8 +224,8 @@ FlexibleGrid/
 2. Commit to main branch
 3. Create a release tag:
    ```bash
-   git tag -a v1.0.0 -m "Release version 1.0.0"
-   git push origin v1.0.0
+   git tag -a v2.0.0 -m "Release version 2.0.0"
+   git push origin v2.0.0
    ```
 4. GitHub Actions automatically:
    - ✅ Builds and tests the library
@@ -234,7 +241,7 @@ This project is licensed under the Apache License 2.0 - see [LICENSE](LICENSE) f
 ## 👨‍💻 Author
 
 **Sai Sanjeev Kolasani**
-- GitHub: [@saisanjeevkolasani](https://github.com/saisanjeevkolasani)
+- GitHub: [@sanjeevk94](https://github.com/sanjeevk94)
 
 ## 🤝 Contributing
 

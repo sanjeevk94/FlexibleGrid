@@ -26,7 +26,7 @@ In your module's `build.gradle.kts`:
 ```kotlin
 dependencies {
     // Add FlexibleGrid
-    implementation("com.github.saisanjeevkolasani:FlexibleGrid:v1.0.0")
+    implementation("com.github.sanjeevk94:FlexibleGrid:v2.0.0")
 }
 ```
 
@@ -297,7 +297,7 @@ Items are **automatically sized** to fit the available space based on:
 
 - 📖 Read the [full documentation](flexiblegrid/README.md)
 - 🔗 Check [real-world examples](app/src/main/java/com/example/flexiblegrid/)
-- 🆘 Open an [issue on GitHub](https://github.com/saisanjeevkolasani/FlexibleGrid/issues)
+- 🆘 Open an [issue on GitHub](https://github.com/sanjeevk94/FlexibleGrid/issues)
 
 ## Questions?
 

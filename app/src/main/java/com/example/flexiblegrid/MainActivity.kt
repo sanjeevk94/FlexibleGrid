@@ -1,6 +1,7 @@
 package com.example.flexiblegrid
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -20,9 +21,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -237,8 +243,12 @@ fun ProductCard(product: ProductItem, modifier: Modifier = Modifier) {
 fun HorizontalScrollDemo(modifier: Modifier = Modifier) {
     val products = generateSampleProducts()
     val configuration = LocalConfiguration.current
+    val context = LocalContext.current
     val screenWidthDp = configuration.screenWidthDp
     val screenHeightDp = configuration.screenHeightDp
+    var lastGesture by remember {
+        mutableStateOf("Try single tap, double tap, or long press on a product card.")
+    }
     
     val horizontalItemSize = calculateAdaptiveItemSize(
         columns = 4,
@@ -256,6 +266,11 @@ fun HorizontalScrollDemo(modifier: Modifier = Modifier) {
     ) {
         Text("Featured Products", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
         Text("Swipe to explore more products →", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+        Text(
+            text = lastGesture,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
         
         FlexibleGrid(
             items = products,
@@ -263,6 +278,18 @@ fun HorizontalScrollDemo(modifier: Modifier = Modifier) {
             columns = 4,
             fillDirection = GridFillDirection.RowWise,
             scrollType = GridScrollType.Horizontal,
+            onItemClick = { product, _ ->
+                lastGesture = "Single tapped ${product.name}"
+                Toast.makeText(context, "Single tapped ${product.name}", Toast.LENGTH_SHORT).show()
+            },
+            onItemDoubleClick = { product, _ ->
+                lastGesture = "Double tapped ${product.name}"
+                Toast.makeText(context, "Double tapped ${product.name}", Toast.LENGTH_SHORT).show()
+            },
+            onItemLongPress = { product, _ ->
+                lastGesture = "Long pressed ${product.name}"
+                Toast.makeText(context, "Long pressed ${product.name}", Toast.LENGTH_SHORT).show()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(horizontalItemSize.height * 2 + 32.dp)

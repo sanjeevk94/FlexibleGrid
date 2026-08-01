@@ -1,5 +1,7 @@
 package com.example.flexiblegrid.lib
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +32,23 @@ data class GridItemSize(
     val height: Dp
 )
 
+@OptIn(ExperimentalFoundationApi::class)
+private fun Modifier.flexibleGridItemInteractions(
+    onClick: (() -> Unit)? = null,
+    onDoubleClick: (() -> Unit)? = null,
+    onLongClick: (() -> Unit)? = null
+): Modifier {
+    if (onClick == null && onDoubleClick == null && onLongClick == null) {
+        return this
+    }
+
+    return combinedClickable(
+        onClick = { onClick?.invoke() },
+        onDoubleClick = onDoubleClick,
+        onLongClick = onLongClick
+    )
+}
+
 fun calculateAdaptiveItemSize(
     columns: Int,
     rows: Int,
@@ -53,6 +72,7 @@ fun calculateAdaptiveItemSize(
     return GridItemSize(width = itemWidth, height = itemHeight)
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <T> FlexibleGrid(
     items: List<T>,
@@ -65,6 +85,9 @@ fun <T> FlexibleGrid(
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(8.dp),
     horizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(8.dp),
     itemSpacing: Dp = 8.dp,
+    onItemClick: ((item: T, index: Int) -> Unit)? = null,
+    onItemDoubleClick: ((item: T, index: Int) -> Unit)? = null,
+    onItemLongPress: ((item: T, index: Int) -> Unit)? = null,
     itemContent: @Composable (T, Int) -> Unit
 ) {
     require(rows > 0) { "rows must be greater than zero" }
@@ -98,13 +121,25 @@ fun <T> FlexibleGrid(
                                         columnIndex * rows + rowIndex
                                     }
                                     val globalIndex = pageStart + flatIndex
+                                    val item = items.getOrNull(globalIndex)
                                     Box(
                                         modifier = Modifier
                                             .weight(1f)
                                             .padding(itemSpacing / 2)
+                                            .flexibleGridItemInteractions(
+                                                onClick = item?.let { currentItem ->
+                                                    { onItemClick?.invoke(currentItem, globalIndex) }
+                                                },
+                                                onDoubleClick = item?.let { currentItem ->
+                                                    { onItemDoubleClick?.invoke(currentItem, globalIndex) }
+                                                },
+                                                onLongClick = item?.let { currentItem ->
+                                                    { onItemLongPress?.invoke(currentItem, globalIndex) }
+                                                }
+                                            )
                                     ) {
-                                        if (globalIndex < items.size) {
-                                            itemContent(items[globalIndex], globalIndex)
+                                        if (item != null) {
+                                            itemContent(item, globalIndex)
                                         }
                                     }
                                 }
@@ -139,11 +174,24 @@ fun <T> FlexibleGrid(
                                         columnIndex * rows + rowIndex
                                     }
                                     val globalIndex = pageStart + flatIndex
+                                    val item = items.getOrNull(globalIndex)
                                     Box(
-                                        modifier = Modifier.padding(itemSpacing / 2)
+                                        modifier = Modifier
+                                            .padding(itemSpacing / 2)
+                                            .flexibleGridItemInteractions(
+                                                onClick = item?.let { currentItem ->
+                                                    { onItemClick?.invoke(currentItem, globalIndex) }
+                                                },
+                                                onDoubleClick = item?.let { currentItem ->
+                                                    { onItemDoubleClick?.invoke(currentItem, globalIndex) }
+                                                },
+                                                onLongClick = item?.let { currentItem ->
+                                                    { onItemLongPress?.invoke(currentItem, globalIndex) }
+                                                }
+                                            )
                                     ) {
-                                        if (globalIndex < items.size) {
-                                            itemContent(items[globalIndex], globalIndex)
+                                        if (item != null) {
+                                            itemContent(item, globalIndex)
                                         }
                                     }
                                 }

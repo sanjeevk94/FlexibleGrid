@@ -56,7 +56,7 @@ jobs:
             **Add to your module `build.gradle.kts`:**
             ```kotlin
             dependencies {
-                implementation("com.github.saisanjeevkolasani:FlexibleGrid:${{ github.ref_name }}")
+                implementation("com.github.sanjeevk94:FlexibleGrid:${{ github.ref_name }}")
             }
             ```
             
@@ -83,9 +83,9 @@ jobs:
             ```
             
             ### 📖 Documentation
-            - [Full README](https://github.com/saisanjeevkolasani/FlexibleGrid/blob/main/README.md)
-            - [Library API Reference](https://github.com/saisanjeevkolasani/FlexibleGrid/blob/main/flexiblegrid/README.md)
-            - [Publishing Guide](https://github.com/saisanjeevkolasani/FlexibleGrid/blob/main/PUBLISHING.md)
+            - [Full README](https://github.com/sanjeevk94/FlexibleGrid/blob/main/README.md)
+            - [Library API Reference](https://github.com/sanjeevk94/FlexibleGrid/blob/main/flexiblegrid/README.md)
+            - [Publishing Guide](https://github.com/sanjeevk94/FlexibleGrid/blob/main/PUBLISHING.md)
             
             ### ✨ Features
             - ✅ Responsive on all screen sizes
@@ -96,8 +96,8 @@ jobs:
             - ✅ Built-in pagination
             
             ### 🆘 Support
-            - Check the [README](https://github.com/saisanjeevkolasani/FlexibleGrid) for examples
-            - [Open an issue](https://github.com/saisanjeevkolasani/FlexibleGrid/issues) for bugs or feature requests
+            - Check the [README](https://github.com/sanjeevk94/FlexibleGrid) for examples
+            - [Open an issue](https://github.com/sanjeevk94/FlexibleGrid/issues) for bugs or feature requests
             
             Enjoy! 🎊
           draft: false

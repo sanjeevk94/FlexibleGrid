@@ -30,19 +30,19 @@ dependencyResolutionManagement {
 **Step 2: Add dependency** (`build.gradle.kts` or `build.gradle`):
 ```kotlin
 dependencies {
-    implementation("com.github.saisanjeevkolasani:FlexibleGrid:v1.0.0")
+    implementation("com.github.sanjeevk94:FlexibleGrid:v2.0.0")
 }
 ```
 
-Replace `v1.0.0` with the actual release tag.
+Replace `v2.0.0` with the actual release tag.
 
 #### Publisher Workflow:
 1. **Make changes** to code
 2. **Commit & push** to GitHub
 3. **Create a release**:
    ```bash
-   git tag -a v1.0.0 -m "Release version 1.0.0"
-   git push origin v1.0.0
+   git tag -a v2.0.0 -m "Release version 2.0.0"
+   git push origin v2.0.0
    ```
 4. **Go to GitHub** → Releases → Create Release from tag
 5. **Users can now install it!** JitPack auto-builds on first request

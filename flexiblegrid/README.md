@@ -10,6 +10,7 @@ A powerful, flexible Android Jetpack Compose composable for creating adaptive gr
 ✅ **Generic Type Support** - Works with any data type  
 ✅ **Automatic Pagination** - Handles large datasets efficiently  
 ✅ **Customizable Spacing** - Fine-tune padding and item spacing  
+✅ **Built-in Item Gestures** - Single tap, double tap, and long press callbacks  
 ✅ **Adaptive Sizing Helper** - Built-in function for responsive item sizes  
 
 ## Installation
@@ -36,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.saisanjeevkolasani:FlexibleGrid:v1.0.0")
+    implementation("com.github.sanjeevk94:FlexibleGrid:v2.0.0")
 }
 ```
 
@@ -55,7 +56,10 @@ fun MyGridScreen(items: List<String>) {
         columns = 3,
         fillDirection = GridFillDirection.RowWise,
         scrollType = GridScrollType.Vertical,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        onItemClick = { item, index ->
+            println("Tapped $item at $index")
+        }
     ) { item, _ ->
         Card(modifier = Modifier.fillMaxSize()) {
             Text(text = item)
@@ -85,7 +89,10 @@ FlexibleGrid(
     items = featuredItems,
     rows = 1,
     columns = 3,
-    scrollType = GridScrollType.Horizontal
+    scrollType = GridScrollType.Horizontal,
+    onItemLongPress = { item, _ ->
+        showContextMenu(item)
+    }
 ) { item, _ ->
     FeaturedCard(item)
 }
@@ -148,6 +155,9 @@ fun <T> FlexibleGrid(
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(8.dp),
     horizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(8.dp),
     itemSpacing: Dp = 8.dp,
+    onItemClick: ((T, Int) -> Unit)? = null,       // Single tap callback
+    onItemDoubleClick: ((T, Int) -> Unit)? = null, // Double tap callback
+    onItemLongPress: ((T, Int) -> Unit)? = null,   // Long press callback
     itemContent: @Composable (T, Int) -> Unit   // Item renderer
 )
 ```
@@ -181,7 +191,8 @@ Returns `GridItemSize` with optimal `width` and `height` for responsive layouts.
 2. **Use `LocalConfiguration`** to get screen dimensions
 3. **Provide meaningful item renderers** - the composable is flexible!
 4. **Set proper modifiers** on your item cards for size constraints
-5. **Handle empty states** - check `items.isEmpty()` before rendering
+5. **Use built-in callbacks for card interactions** instead of duplicating gesture handling
+6. **Handle empty states** - check `items.isEmpty()` before rendering
 
 ## Real-World Use Cases
 
