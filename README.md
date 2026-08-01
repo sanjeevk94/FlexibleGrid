@@ -2,6 +2,9 @@
 
 A powerful, flexible, and reusable Jetpack Compose grid layout composable for Android. Perfect for creating adaptive grids that work across all device sizes and orientations.
 
+<img width="480" height="640" alt="flexiblegrid_demo" src="https://github.com/user-attachments/assets/c77bb0bc-58df-4127-9a35-18ab8cee681b" />
+
+
 [![Build & Test](https://github.com/sanjeevk94/FlexibleGrid/actions/workflows/build.yml/badge.svg)](https://github.com/sanjeevk94/FlexibleGrid/actions/workflows/build.yml)
 [![Publish Library](https://github.com/sanjeevk94/FlexibleGrid/actions/workflows/publish.yml/badge.svg)](https://github.com/sanjeevk94/FlexibleGrid/actions/workflows/publish.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
