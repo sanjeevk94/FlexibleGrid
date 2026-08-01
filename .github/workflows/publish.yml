@@ -1,0 +1,104 @@
+name: Publish FlexibleGrid Library
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+      
+      - name: Grant execute permission to gradlew
+        run: chmod +x gradlew
+      
+      - name: Build library (Release)
+        run: ./gradlew :flexiblegrid:assembleRelease --no-daemon
+      
+      - name: Build demo app
+        run: ./gradlew :app:assembleDebug --no-daemon
+      
+      - name: Create Release with Installation Instructions
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: FlexibleGrid ${{ github.ref_name }}
+          body: |
+            ## 🎉 FlexibleGrid Library Release
+            
+            Thank you for using FlexibleGrid!
+            
+            ### ⚡ Quick Installation
+            
+            **Add to your `settings.gradle.kts`:**
+            ```kotlin
+            dependencyResolutionManagement {
+                repositories {
+                    google()
+                    mavenCentral()
+                    maven { url = uri("https://jitpack.io") }
+                }
+            }
+            ```
+            
+            **Add to your module `build.gradle.kts`:**
+            ```kotlin
+            dependencies {
+                implementation("com.github.saisanjeevkolasani:FlexibleGrid:${{ github.ref_name }}")
+            }
+            ```
+            
+            That's it! No credentials needed. 🚀
+            
+            ### 📚 Usage Example
+            ```kotlin
+            import com.example.flexiblegrid.lib.FlexibleGrid
+            import com.example.flexiblegrid.lib.GridFillDirection
+            import com.example.flexiblegrid.lib.GridScrollType
+            
+            FlexibleGrid(
+                items = (1..20).toList(),
+                rows = 3,
+                columns = 2,
+                fillDirection = GridFillDirection.RowWise,
+                scrollType = GridScrollType.Vertical,
+                itemContent = { item, _ ->
+                    Card(Modifier.padding(8.dp)) {
+                        Text("Item $item")
+                    }
+                }
+            )
+            ```
+            
+            ### 📖 Documentation
+            - [Full README](https://github.com/saisanjeevkolasani/FlexibleGrid/blob/main/README.md)
+            - [Library API Reference](https://github.com/saisanjeevkolasani/FlexibleGrid/blob/main/flexiblegrid/README.md)
+            - [Publishing Guide](https://github.com/saisanjeevkolasani/FlexibleGrid/blob/main/PUBLISHING.md)
+            
+            ### ✨ Features
+            - ✅ Responsive on all screen sizes
+            - ✅ Row-wise & column-wise fill
+            - ✅ Vertical & horizontal scrolling
+            - ✅ Generic rendering with custom composables
+            - ✅ Adaptive sizing
+            - ✅ Built-in pagination
+            
+            ### 🆘 Support
+            - Check the [README](https://github.com/saisanjeevkolasani/FlexibleGrid) for examples
+            - [Open an issue](https://github.com/saisanjeevkolasani/FlexibleGrid/issues) for bugs or feature requests
+            
+            Enjoy! 🎊
+          draft: false
+          prerelease: false
